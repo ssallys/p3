@@ -1,10 +1,10 @@
-package pcap.examples;
+package p3.examples;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 
-import nflow.hadoop.flow.analyzer.FlowWritable;
+import nflow.hadoop.analyzer.lib.FlowWritable;
 
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
