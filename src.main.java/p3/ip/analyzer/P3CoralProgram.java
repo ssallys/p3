@@ -31,7 +31,6 @@ import p3.hadoop.common.pcap.lib.PcapRec;
 import p3.hadoop.mapred.BinaryInputFormat;
 import p3.hadoop.mapred.BinaryOutputFormat;
 import p3.hadoop.mapred.PcapInputFormat;
-import p3.hadoop.mapred.PcapRealtimeFormat;
 
 /**
  * 
@@ -915,45 +914,5 @@ public class P3CoralProgram {
 		e.printStackTrace();
 	}
   }
-    
 
-	private JobConf getRealTestConf(String jobName){
-		
-	    Path Output = new Path(jobName);			
-        conf.setJobName(jobName);  
-        conf.setNumMapTasks(4);
-       
-        conf.setOutputKeyClass(LongWritable.class);
-        conf.setOutputValueClass(BytesWritable.class);	       
-        conf.setInputFormat(PcapRealtimeFormat.class);        
-        conf.setOutputFormat(TextOutputFormat.class);        
-        conf.setMapperClass(PcapMapper.class);
- //       conf.setCombinerClass(Reduce_CountUp.class);          
- //       conf.setReducerClass(Reduce_CountUp.class);    
-        
-//        FileInputFormat.setInputPaths(conf, inFilePath);
-//        FileOutputFormat.setOutputPath(conf, Output);
-        
-        return conf;
-	}
-	
-    public void startRealTest(){// throws IOException {
-	
-		try {
-			
-			FileSystem fs = FileSystem.get(conf);
-		    JobConf myconf = getRealTestConf("RealTest");        
-		    
-		    // delete any output that might exist from a previous run of this job
-		    if (fs.exists(FileOutputFormat.getOutputPath(myconf))) {
-		      fs.delete(FileOutputFormat.getOutputPath(myconf), true);
-		    }        
-			JobClient.runJob(myconf);	
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
- 
 }
