@@ -33,13 +33,11 @@ public class BytePair implements WritableComparable<BytePair> {
 		return second;
 	}
 	
-	@Override
 	public void write(DataOutput out) throws IOException {
 		first.write(out);
 		second.write(out);
 	}
 	
-	@Override
 	public void readFields(DataInput in) throws IOException {
 		first.readFields(in);
 		second.readFields(in);
@@ -63,7 +61,6 @@ public class BytePair implements WritableComparable<BytePair> {
 	public String toString() {
 		return first + "\t" + second;
 	}
-	@Override
 	public int compareTo(BytePair tp) {
 		int cmp = first.compareTo(tp.first);
 		if (cmp != 0) {

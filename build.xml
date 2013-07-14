@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="nflow">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="C:/eclipse"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    <property name="base.dir"  value="."/>    
+    <property name="lib.dir" value="lib"/>	
+    <property name="manifest.file" value="${base.dir}/MANIFEST.MF"/>	
+    <path id="p3lite.classpath">
+        <pathelement location="bin"/>
+        <pathelement path="${base.dir}/lib" />
+        <fileset dir="${base.dir}/lib">
+                <include name="*.jar" />
+        </fileset>
+    </path>
+    <target name="init">
+    	<property name="project_name" value="p3lite"/>
+		<property name="srcDir" value="src.main.java"/>
+		<property name="classDir" value="bin"/>
+		<property name="jar" value="${project_name}.jar"/>
+		<property name="obfjar" value="${project_name}.jar"/>
+		<property name="renamelog" value="${project_name}_renamelog.xml"/>
+		<property name="shrinklog" value="${project_name}_shrinklog.xml"/>
+		<mkdir dir="${classDir}" />
+        <copy includeemptydirs="false" todir="${classDir}">
+            <fileset dir="src.main.java">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>    	
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src.main.java"/>
+            <classpath refid="p3lite.classpath"/>
+        </javac>
+    </target>
+    <target description="" name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+              	
+    <!-- create .jar -->
+    <target name="tmpjar" depends="build">
+      <jar jarfile="${obfjar}"
+        basedir="${classDir}">
+        <fileset dir="${srcDir}">
+          <include name="resources/*.properties"/>
+        </fileset>
+      </jar>
+    </target>
+
+    <!-- create .jar -->
+    <target name="jar" depends="build">
+      <jar jarfile="${jar}" basedir="${classDir}" manifest="${manifest.file}">
+        <fileset dir="${srcDir}">
+          <include name="resources/*.properties"/>
+        </fileset>
+    	<zipgroupfileset dir="${lib.dir}">
+            <include name="jpcap.jar"/>			
+            <include name="p3utils.jar"/>	
+    	</zipgroupfileset>
+      </jar>
+    </target>
+  	
+    <!-- yguard -->
+    <target depends="jar" name="package">
+      <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="yguard.jar"/>
+      <!-- the following can be adjusted to your needs -->
+      <yguard>
+        <inoutpair in="${jar}" out="${obfjar}"/>
+        <externalclasses>       	
+            <pathelement location="bin"/>
+			<pathelement location="${dist.dir}/${jar.file}" />
+            <pathelement path="${base.dir}/lib" />
+                  <fileset dir="${base.dir}/lib">
+                          <include name="*.jar" />
+                  </fileset>
+        </externalclasses>
+
+        <shrink logfile="shrinklog.xml">
+          <property name="error-checking" value="pedantic"/>
+        </shrink>
+
+        <rename mainclass="nflow.runner.*" logfile="renamelog.xml">
+          <property name="error-checking" value="pedantic"/>
+        </rename>
+      </yguard>
+    </target>
+              	
+<!-- end file build.xml -->
+</project>

@@ -86,21 +86,18 @@ public class PcapVlenRecordReader implements RecordReader<LongWritable,BytesWrit
 	    this.pos = start;
     }
 
-	@Override
-    public LongWritable createKey() {
+	public LongWritable createKey() {
       return new LongWritable();
     }
 
-	@Override
-    public BytesWritable createValue() {
+	public BytesWritable createValue() {
       return new BytesWritable();
     }
 
     /**
      * Read raw bytes from a PcapFile.
      */
-	@Override
-    public synchronized boolean next(LongWritable key, BytesWritable value)
+	public synchronized boolean next(LongWritable key, BytesWritable value)
         throws IOException {
 
         while (pos < end) {
@@ -122,20 +119,17 @@ public class PcapVlenRecordReader implements RecordReader<LongWritable,BytesWrit
     /**
      * Get the progress within the split
      */
-	  @Override
-    public float getProgress() {
+	  public float getProgress() {
       if (start == end) {
         return 0.0f;
       } else {
         return Math.min(1.0f, (pos - start) / (float)(end - start));
       }
     }
-	  @Override
-    public  synchronized long getPos() throws IOException {
+	  public  synchronized long getPos() throws IOException {
       return pos;
     }
-	  @Override
-    public synchronized void close() throws IOException {
+	  public synchronized void close() throws IOException {
       if (in != null) {
         in.close(); 
       }
