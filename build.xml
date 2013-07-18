@@ -3,7 +3,7 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="nflow">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="p3lite">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="C:/eclipse"/>
     <property name="debuglevel" value="source,lines,vars"/>
@@ -21,7 +21,7 @@
     </path>
     <target name="init">
     	<property name="project_name" value="p3lite"/>
-		<property name="srcDir" value="src.main.java"/>
+		<property name="srcDir" value="src"/>
 		<property name="classDir" value="bin"/>
 		<property name="jar" value="${project_name}.jar"/>
 		<property name="obfjar" value="${project_name}.jar"/>
@@ -29,7 +29,7 @@
 		<property name="shrinklog" value="${project_name}_shrinklog.xml"/>
 		<mkdir dir="${classDir}" />
         <copy includeemptydirs="false" todir="${classDir}">
-            <fileset dir="src.main.java">
+            <fileset dir="src">
                 <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
@@ -44,7 +44,7 @@
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
-            <src path="src.main.java"/>
+            <src path="src"/>
             <classpath refid="p3lite.classpath"/>
         </javac>
     </target>
@@ -84,31 +84,6 @@
             <include name="p3utils.jar"/>	
     	</zipgroupfileset>
       </jar>
-    </target>
-  	
-    <!-- yguard -->
-    <target depends="jar" name="package">
-      <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="yguard.jar"/>
-      <!-- the following can be adjusted to your needs -->
-      <yguard>
-        <inoutpair in="${jar}" out="${obfjar}"/>
-        <externalclasses>       	
-            <pathelement location="bin"/>
-			<pathelement location="${dist.dir}/${jar.file}" />
-            <pathelement path="${base.dir}/lib" />
-                  <fileset dir="${base.dir}/lib">
-                          <include name="*.jar" />
-                  </fileset>
-        </externalclasses>
-
-        <shrink logfile="shrinklog.xml">
-          <property name="error-checking" value="pedantic"/>
-        </shrink>
-
-        <rename mainclass="nflow.runner.*" logfile="renamelog.xml">
-          <property name="error-checking" value="pedantic"/>
-        </rename>
-      </yguard>
     </target>
               	
 <!-- end file build.xml -->
