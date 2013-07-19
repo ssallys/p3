@@ -144,9 +144,6 @@ public class PacketCount {
 	
 	conf.setLong("pcap.file.captime.min", cap_start);
 	conf.setLong("pcap.file.captime.max", cap_end);
-	   
-    System.out.println("cap_start->"+cap_start+" || pcap.file.captime.min->"+conf.getLong("pcap.file.captime.min", Long.MIN_VALUE));
-    System.out.println("cap_end  ->"+cap_end+" || pcap.file.captime.max->"+conf.getLong("pcap.file.captime.max", Long.MAX_VALUE));
     
 	FileInputFormat.addInputPath(job, inputPath);
 	FileOutputFormat.setOutputPath(job, outputPath);
@@ -155,8 +152,13 @@ public class PacketCount {
     // delete any output that might exist from a previous run of this job
     if (fs.exists(FileOutputFormat.getOutputPath(job))) {
       fs.delete(FileOutputFormat.getOutputPath(job), true);
-    }   
-	        
+    }  
+    
+	conf.getLong("pcap.file.captime.min", cap_start);
+	conf.getLong("pcap.file.captime.max", cap_end);
+	System.out.println(cap_start);
+	System.out.println(cap_end);
+	
     job.waitForCompletion(true);
  }
         

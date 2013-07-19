@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<configuration>
+	<property>
+		<name>io.file.binarybuffer.size</name>
+		<value>34</value>
+		<description>fixed length of  binary record size</description>
+	</property>
+	<property>
+		<name>pcap.record.value.pos</name>
+		<value>46</value>
+		<description>count up field</description>
+	</property>
+	<property>
+		<name>pcap.record.value.len</name>
+		<value>4</value>
+		<description>count up field</description>
+	</property>
+	<property>
+		<name>pcap.record.key.pos</name>
+		<value>39</value>
+		<description>count up field</description>
+	</property>
+	<property>
+		<name>pcap.record.key.len</name>
+		<value>1</value>
+		<description>count up field</description>
+	</property>
+	<property>
+		<name>pcap.record.sort.field</name>
+		<value>0</value>
+		<description>field number for sorting</description>
+	</property>
+	<property>
+		<name>pcap.record.sort.topN</name>
+		<value>0</value>
+		<description># of record from Top</description>
+	</property>
+	<property>
+		<name>pcap.record.filter.field</name>
+		<value>protocol</value>
+		<final>t</final>
+		<description>Weight</description>
+	</property>
+	<property>
+		<name>pcap.file.captime.min</name>
+		<value>1168300867</value>
+		<description>stop time of packet capturing</description>
+	</property>
+	<property>
+		<name>pcap.file.captime.max</name>
+		<value>1168387267</value>
+		<description>stop time of packet capturing</description>
+	</property>
+	<property>
+		<name>pcap.file.header.skip</name>
+		<value>true</value>
+		<description>stop time of packet capturing</description>
+	</property>
+	<property>
+		<name>filterfield</name>
+		<value>protocol</value>
+		<final>t</final>
+		<description>Weight</description>
+	</property>
+		<property>
+		<name>pcap.record.rate.interval</name>
+		<value>60</value>
+		<description>interval for periodic jobs </description>
+	</property>
+</configuration> 
