@@ -68,15 +68,15 @@ public class Runner {
 				break;	
 			case 'd':
 				System.out.println("FlowDetector called.");
-				FlowDetect fd1 = new FlowDetect();
-				isreal = false;
-				fd1.startStats(inPathStr, reduces, isreal);	
+//				FlowDetect fd1 = new FlowDetect();
+//				isreal = false;
+//				fd1.startStats(inPathStr, reduces, isreal);	
 				break;	
 			case 'D':
 				System.out.println("FlowDetector in AIO called.");
-				FlowDetect2 fd2 = new FlowDetect2();
-				isreal = true;
-				fd2.startStats(inPathStr, reduces, isreal);
+//				FlowDetect2 fd2 = new FlowDetect2();
+//				isreal = true;
+//				fd2.startStats(inPathStr, reduces, isreal);
 				break;	
 			case 'r':
 				System.out.println("FlowDetector in realtime called.");
